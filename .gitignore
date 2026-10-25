@@ -1,0 +1,19 @@
+
+# Dependencias
+node_modules/
+
+# Variables de entorno (contienen el token de GitHub)
+.env
+.env.*
+!.env.example
+
+# Build
+dist/
+
+# Logs
+*.log
+
+# Sistema y editor
+.DS_Store
+.vscode/
+.idea/
