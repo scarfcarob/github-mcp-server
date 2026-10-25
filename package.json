@@ -1,0 +1,43 @@
+{
+  "name": "github-mcp-server",
+  "version": "1.0.0",
+  "description": "MCP Server en Node.js y TypeScript que permite a un agente de IA automatizar operaciones en GitHub con lenguaje natural.",
+  "main": "dist/server.js",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsx src/server.ts",
+    "start": "node dist/server.js",
+    "test": "vitest run"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/scarfcarob/github-mcp-server.git"
+  },
+  "keywords": [
+    "mcp",
+    "github",
+    "typescript",
+    "ai-agents"
+  ],
+  "author": "Carolina S. Betlienski",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/scarfcarob/github-mcp-server/issues"
+  },
+  "homepage": "https://github.com/scarfcarob/github-mcp-server#readme",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.32.2",
+    "@octokit/rest": "^22.0.1",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.5",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2",
+    "vitest": "^5.0.5"
+  }
+}
