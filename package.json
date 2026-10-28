@@ -9,10 +9,11 @@
     "dev": "tsx src/server.ts",
     "start": "node dist/server.js",
     "typecheck": "tsc --noEmit",
+    "inspector": "mcp-inspector node dist/server.js",
     "test": "vitest run"
   },
   "engines": {
-    "node": ">=22.12.0"
+    "node": ">=22.19.0"
   },
   "repository": {
     "type": "git",
@@ -37,6 +38,7 @@
     "zod": "4.6.7"
   },
   "devDependencies": {
+    "@modelcontextprotocol/inspector": "2.12.0",
     "@types/node": "24.19.2",
     "tsx": "4.23.15",
     "typescript": "7.0.2",
