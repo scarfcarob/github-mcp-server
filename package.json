@@ -1,0 +1,46 @@
+{
+  "name": "github-mcp-server",
+  "version": "1.0.0",
+  "description": "MCP Server en Node.js y TypeScript que permite a un agente de IA operar en GitHub con lenguaje natural desde Antigravity: crea y lista repositorios, crea y lista issues y crea commits, con validación Zod y errores en lenguaje natural",
+  "type": "module",
+  "main": "dist/server.js",
+  "engines": {
+    "node": ">=22.19"
+  },
+  "scripts": {
+    "dev": "tsx watch src/server.ts",
+    "build": "tsc -p tsconfig.json",
+    "start": "node dist/server.js",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "keywords": [
+    "mcp",
+    "mcp-server",
+    "github",
+    "octokit",
+    "zod",
+    "antigravity",
+    "typescript"
+  ],
+  "author": "Carolina S. Betlienski",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/carolinabetlienski/github-mcp-server.git"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.32.2",
+    "@octokit/rest": "^22.0.1",
+    "dotenv": "^18.0.9",
+    "git": "^0.1.5",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.6",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2",
+    "vitest": "^5.0.5"
+  }
+}
