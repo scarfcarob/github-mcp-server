@@ -1,5 +1,5 @@
-import { z } from "zod";   
 
+import { z } from "zod";
 
 
 
@@ -8,74 +8,103 @@ const owner = z.string().trim().min(1, "owner es requerido").describe("Dueño de
 const repo = z.string().trim().min(1, "repo es requerido").describe("Nombre del repositorio, sin el owner. Ej: Hello-World");
 
 
-
-
-
 export const ListRepositoriesSchema = z.object({
-
+    
     type: z.enum(["all", "public", "private"]).default("all").describe("Qué repos listar: todos, solo públicos o solo privados"),
-
+    
     sort: z.enum(["created", "updated", "pushed", "full_name"]).default("updated").describe("Orden del listado"),
-
+    
     per_page: z.number().int().min(1).max(100).default(30).describe("Cantidad de repos a devolver (1 a 100)"),
+});
 
+
+
+export const CreateRepositorySchema = z.object({
+    name: z
+        
+        .string()
+        
+        .trim()
+        
+        .min(3, "name necesita al menos 3 caracteres")
+        
+        .max(100, "name admite hasta 100 caracteres")
+        
+        .regex(/^[A-Za-z0-9_-]+$/, "name solo puede tener letras, números, guiones (-) y guiones bajos (_), sin espacios ni otros símbolos")
+        
+        .describe("Nombre del repositorio NUEVO: 3 a 100 caracteres, solo letras, números, guiones y guiones bajos. Ej: mi-proyecto-2026"),
+    
+        description: z.string().trim().max(350, "description admite hasta 350 caracteres").optional().describe("Descripción corta del repositorio (hasta 350 caracteres)"),
+    
+        private: z.boolean().default(true).describe("true = repositorio privado (valor por defecto, más seguro). false = público: cualquiera en internet lo va a poder ver"),
 });
 
 
 
 
-
-export const CreateIssueSchema = z.object({      
-
+export const ListIssuesSchema = z.object({
+    
     owner,
-
+    
     repo,
-
-    title: z.string().trim().min(3, "title necesita al menos 3 caracteres").max(256, "title admite hasta 256 caracteres").describe("Título del issue"),
-
-    body: z.string().max(65_000, "body es demasiado largo").optional().describe("Descripción del issue en markdown"),    
-
-    labels: z.array(z.string().min(1)).max(10, "máximo 10 labels").optional().describe("Etiquetas que YA existen en el repo. Ej: [\"bug\"]"), 
-
+    
+    state: z.enum(["open", "closed", "all"]).default("open").describe("Qué issues listar: open (abiertos, valor por defecto), closed (cerrados) o all (todos)"),
+    
+    per_page: z.number().int().min(1).max(100).default(30).describe("Cantidad máxima de issues a devolver (1 a 100)"),
 });
 
+
+
+export const CreateIssueSchema = z.object({
+    
+    owner,
+    
+    repo,
+    
+    title: z.string().trim().min(3, "title necesita al menos 3 caracteres").max(256, "title admite hasta 256 caracteres").describe("Título del issue"),
+    
+    body: z.string().max(65_000, "body es demasiado largo").optional().describe("Descripción del issue en markdown"),
+    
+    labels: z.array(z.string().min(1)).max(10, "máximo 10 labels").optional().describe("Etiquetas que YA existen en el repo. Ej: [\"bug\"]"),
+
+});
 
 
 
 export const CreateCommitSchema = z.object({
-
+    
     owner,
-
+    
     repo,
-
+    
     path: z.string().trim().min(1, "path es requerido").refine((p) => !p.startsWith("/"), "path no puede empezar con /").refine((p) => !p.split("/").includes(".."), "path no puede contener ..").describe("Ruta del archivo dentro del repo, sin / al inicio. Ej: docs/notas.md"),
-
+    
     content: z.string().describe("Contenido COMPLETO del archivo (texto). Si el archivo existe, se reemplaza entero"),
-
+    
     message: z.string().trim().min(1, "message es requerido").max(500).describe("Mensaje del commit. Ej: Agrega notas de la reunión"),
-
+    
     branch: z.string().trim().min(1).optional().describe("Rama donde commitear. Si no se indica, se usa la rama principal del repo"),
 
 });
 
- 
+
+
 
 export type ListRepositoriesInput = z.infer<typeof ListRepositoriesSchema>;
-
-export type CreateIssueInput = z.infer<typeof CreateIssueSchema>;  
-
-export type CreateCommitInput = z.infer<typeof CreateCommitSchema>;  
-
-
+export type CreateRepositoryInput = z.infer<typeof CreateRepositorySchema>;
+export type ListIssuesInput = z.infer<typeof ListIssuesSchema>;
+export type CreateIssueInput = z.infer<typeof CreateIssueSchema>;
+export type CreateCommitInput = z.infer<typeof CreateCommitSchema>;
 
 
 
 export function toJsonSchema(schema: z.ZodType): Record<string, unknown> {
-
+    
     const { $schema: _ignorado, ...json } = z.toJSONSchema(schema, { io: "input" }) as Record<string, unknown>;
-
+    
     return json;
 
 }
+
 
 
