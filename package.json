@@ -28,7 +28,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/carolinabetlienski/github-mcp-server.git"
+    "url": "https://github.com/scarfcarob/github-mcp-server.git"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.32.2",
