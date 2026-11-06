@@ -7,11 +7,11 @@ import { logger } from "../utils/logging.js";
 
 export type ErrorCode =
 
-    | "VALIDATION_ERROR"  
+    | "VALIDATION_ERROR" 
 
     | "AUTH_ERROR" 
 
-    | "GITHUB_API_ERROR" 
+    | "GITHUB_API_ERROR"
 
     | "NETWORK_ERROR" 
 
@@ -21,7 +21,7 @@ export type ErrorCode =
 
 export type ErrorAction =
 
-    | "FIX_INPUT" 
+    | "FIX_INPUT"  
 
     | "ADD_CREDENTIALS" 
 
@@ -29,7 +29,7 @@ export type ErrorAction =
 
     | "CHECK_RESOURCE"  
 
-    | "CONTACT_SUPPORT";
+    | "CONTACT_SUPPORT"; 
 
 
 
@@ -52,7 +52,7 @@ interface AppErrorOptions {
 }
 
 
- 
+
 
 export class AppError extends Error {
 
@@ -215,8 +215,6 @@ export class GitHubAPIError extends AppError {
 
 
 
-
-
 export interface ErrorContext {
 
     operation: string; 
@@ -311,7 +309,7 @@ export function toAppError(err: unknown, ctx: ErrorContext): AppError {
 
     if (status === 403) {
 
-        return new GitHubAPIError(`Tu token no tiene permiso para ${ctx.operation} en el repositorio ${repoName}.`, {
+        return new GitHubAPIError(`Tu token no tiene permiso para ${ctx.operation}${ctx.owner && ctx.repo ? ` en el repositorio ${repoName}` : ""}.`, {
 
             status,
 
@@ -457,7 +455,7 @@ export function formatToolError(err: unknown): ToolErrorPayload {
 
     }
 
-    
+     
 
     return {
 
@@ -477,7 +475,7 @@ export function formatToolError(err: unknown): ToolErrorPayload {
 
 
 
-
+ 
 
 export function fromZodError(error: { issues: Array<{ path: PropertyKey[]; message: string }> }): ValidationError {
 
@@ -491,7 +489,7 @@ export function fromZodError(error: { issues: Array<{ path: PropertyKey[]; messa
 
 
 
-
+ 
 
 export function fail(tool: string, err: unknown): CallToolResult {
 
@@ -507,4 +505,4 @@ export function fail(tool: string, err: unknown): CallToolResult {
 
     };
 
-} 
+}
